@@ -1,5 +1,5 @@
 import React from 'react'
-import { orderComplete } from '../static/delivery.jpg'
+import orderComplete from '../static/delivery.jpg'
 
 export default function Confirmation() {
     return (

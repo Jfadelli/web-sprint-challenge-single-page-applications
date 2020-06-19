@@ -106,6 +106,7 @@ const App = () => {
     postNewOrder(() => {
       getOrders()
     })
+
   }
 
   useEffect(() => {

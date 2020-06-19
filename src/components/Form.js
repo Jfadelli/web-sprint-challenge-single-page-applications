@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Form(props) {
     const {
@@ -8,8 +9,11 @@ export default function Form(props) {
         onCheckboxChange,
         disabled,
         errors,
-    } = props
+    } = props;
 
+    // const nextPath = (path) => {
+    //     this.props.history.push(path)
+    // }
     return (
 
         <form className='form container' onSubmit={onSubmit}>
@@ -187,7 +191,7 @@ export default function Form(props) {
 
 
             <div className='form-group submit'>
-                <button disabled={disabled} value='/Confirmation'>submit</button>
+                <Link to='/confirmation'><button disabled={disabled}>submit</button></Link>
             </div>
         </form >
     )

@@ -15,7 +15,6 @@ const formSchema = Yup.object().shape({
         .required("Must select a sauce."),
     specialInstructions: Yup
         .string(),
-
 })
 
 export default formSchema
