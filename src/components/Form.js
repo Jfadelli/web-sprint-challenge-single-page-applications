@@ -43,7 +43,7 @@ export default function Form(props) {
                     >
                         <option value=''>- Select an option -</option>
                         <option value='small'>Small</option>
-                        <option value='meduim'>Medium</option>
+                        <option value='medium'>Medium</option>
                         <option value='large'>Large</option>
                     </select>
                 </label>
@@ -191,7 +191,9 @@ export default function Form(props) {
 
 
             <div className='form-group submit'>
-                <Link to='/confirmation'><button disabled={disabled}>submit</button></Link>
+
+                <button to='/confirmation' renderas={Link} disabled={disabled}>submit</button>
+
             </div>
         </form >
     )

@@ -7,10 +7,12 @@ import * as Yup from 'yup'
 import formSchema from '../validation/FormSchema'
 import '../App.css'
 import hero from '../static/pizza.jpg'
+import axios from 'axios'
 const App = () => {
 
   //////////////// INITIAL STATES ////////////////
   const initialFormValues = {
+    name: '',
     size: '',
     sauce: '',
     toppings: {
@@ -48,12 +50,27 @@ const App = () => {
 
   //////////////// HELPERS ////////////////
   const getOrders = () => {
-
+    // axios.get('https://reqres.in/api/users')
+    //   .then(response => {
+    //     setOrder(response.data)
+    //   })
+    //   .catch(err => {
+    //   })
+    console.log(order)
   }
 
-  const postNewOrder = () => {
-    setOrder([...order, formValues])
-    setFormValues(initialFormValues)
+  const postNewOrder = (newOrder) => {
+    axios.post('https://reqres.in/api/users', newOrder)
+      .then(res => {
+        console.log(res.data)
+        setOrder([...order, res.data])
+        console.log(order)
+      })
+      .catch(err => {
+      })
+      .finally(() => {
+        setFormValues(initialFormValues)
+      })
   }
 
   //////////////// EVENT HANDLERS ////////////////
@@ -94,29 +111,33 @@ const App = () => {
 
   const onSubmit = evt => {
     evt.preventDefault()
+    // axios.post('https://reqres.in/api/users', formValues)
+    //   .then(res => {
+    //     setOrder([order, res.data])
+    //     console.log(order)
+    //   })
 
     const newOrder = {
+      name: formValues.name,
       size: formValues.size,
       sauce: formValues.sauce,
       toppings: Object.keys(formValues.toppings)
         .filter(toppingName => (formValues.toppings[toppingName] === true)),
-      glutenFree: formValues.glutenFree,
       specialInstructions: formValues.specialInstructions
     }
-    postNewOrder(() => {
-      getOrders()
-    })
+    postNewOrder(newOrder)
 
   }
+  /////////Side Effects//////////
+  useEffect(() => {
+    getOrders()
+  }, [])
 
   useEffect(() => {
     formSchema.isValid(formValues).then(valid => {
       setDisabled(!valid);
     })
   }, [formValues])
-
-
-
   return (
     <div className='home-page'>
       <nav>
@@ -125,12 +146,13 @@ const App = () => {
         <div>
           <Link to='/'>Home</Link>
           <Link to='/Form'>Order</Link>
+          <Link to='./Confirmation'>My Orders</Link>
         </div>
       </nav>
       <img src={hero} alt='fruit' />
       <Switch>
         <Route path="/Confirmation">
-          <Confirmation />
+          <Confirmation order={order} />
         </Route>
 
         <Route path="/form">
@@ -141,6 +163,7 @@ const App = () => {
             onSubmit={onSubmit}
             disabled={disabled}
             errors={formErrors}
+
           />
         </Route>
 
