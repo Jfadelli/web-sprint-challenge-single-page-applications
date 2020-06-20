@@ -1,6 +1,8 @@
+import cy from "cypress"
+
 describe('Navigation', () => {
     it('can navigate to the site', () => {
-        cy.visit('http://localhost:3000/')
+        cy.visit('http://localhost:3002/')
     })
     it('Make an order button exists and is clickable', () => {
         cy.get('button.md-button')

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import Confirmation from './Confirmation.js'
 import Form from './Form.js'
 import HomePage from './HomePage'
@@ -8,6 +8,7 @@ import formSchema from '../validation/FormSchema'
 import '../App.css'
 import hero from '../static/pizza.jpg'
 import axios from 'axios'
+
 const App = () => {
 
   //////////////// INITIAL STATES ////////////////
@@ -30,7 +31,6 @@ const App = () => {
       extraCheese: false,
       glutenFree: false
     },
-
     specialInstructions: '',
   }
 
@@ -50,13 +50,13 @@ const App = () => {
 
   //////////////// HELPERS ////////////////
   const getOrders = () => {
-    // axios.get('https://reqres.in/api/users')
-    //   .then(response => {
-    //     setOrder(response.data)
-    //   })
-    //   .catch(err => {
-    //   })
-    console.log(order)
+    axios.get('https://reqres.in/api/users')
+      .then(response => {
+        console.log(response)
+        setOrder(response.data[1].data)
+      })
+      .catch(err => {
+      })
   }
 
   const postNewOrder = (newOrder) => {
@@ -64,7 +64,6 @@ const App = () => {
       .then(res => {
         console.log(res.data)
         setOrder([...order, res.data])
-        console.log(order)
       })
       .catch(err => {
       })
@@ -163,10 +162,9 @@ const App = () => {
             onSubmit={onSubmit}
             disabled={disabled}
             errors={formErrors}
-
+            order={order}
           />
         </Route>
-
         <Route path="/">
           <HomePage />
         </Route>

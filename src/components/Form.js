@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import ThisOrder from './ThisOrder'
 
 export default function Form(props) {
     const {
@@ -9,13 +10,13 @@ export default function Form(props) {
         onCheckboxChange,
         disabled,
         errors,
+        order,
     } = props;
 
     // const nextPath = (path) => {
     //     this.props.history.push(path)
     // }
     return (
-
         <form className='form container' onSubmit={onSubmit}>
             <h2>Build Your Own Pizza</h2>
 
@@ -195,6 +196,14 @@ export default function Form(props) {
                 <button to='/confirmation' renderas={Link} disabled={disabled}>submit</button>
 
             </div>
+            <div>
+                {order.map(data => {
+                    return (
+                        <ThisOrder key={data.id} details={data} />
+                    )
+                })}
+            </div>
         </form >
+
     )
 }
